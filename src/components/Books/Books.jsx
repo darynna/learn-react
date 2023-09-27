@@ -2,7 +2,7 @@ import css from './Books.module.css';
 
 
 
-export const Book = ({ title, author, year, genre, favourite, cover }) => {
+export const Book = ({ title, author, year, genre, favourite, cover, onOpenModal }) => {
   return (
     <li className={css.book}>
       <div className={css.thumbWrapper}>
@@ -18,6 +18,7 @@ export const Book = ({ title, author, year, genre, favourite, cover }) => {
       <p className={css.genre}>
         Genre: <b>{genre}</b>
       </p>
+      <button onClick={() => onOpenModal({title, author})}>Open modal</button>
     </li>
   );
 };
