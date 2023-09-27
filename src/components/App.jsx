@@ -196,3 +196,31 @@
 
 
 //READER
+
+import { Component } from "react";
+import PokemonForm from "./PokemonForm/PokemonForm";
+import PokemonInfo from "./PokemonInfo/PokemonInfo";
+import { ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+export default class App extends Component{
+
+    state={
+        pokemonName: ''
+    }
+   handleSearchSubmit=(pokemonName)=>{
+     this.setState({
+        pokemonName: pokemonName
+     })
+   }
+
+    render(){
+        return(
+            <>
+            <PokemonForm onSubmit={this.handleSearchSubmit}/>
+            <ToastContainer/>
+            <PokemonInfo pokemonName={this.state.pokemonName}/>
+            </>
+        )
+    }
+}
