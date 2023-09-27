@@ -1,0 +1,12 @@
+.ColorPicker_options{
+    display: block;
+    width: 30px;
+    height: 30px;
+    background-color: firebrick;
+    border: none;
+    margin-bottom: 4px;
+}
+
+.ColorPicker_options_active{
+ transform: scale(1.2);
+}

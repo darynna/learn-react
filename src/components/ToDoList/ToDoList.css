@@ -1,0 +1,11 @@
+.ToDoList_item{
+    display: flex;
+    align-items: center;
+}
+
+.ToDoList_text{
+    font-size: 24px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 12px;
+}
