@@ -18,7 +18,7 @@
 // //     {label: 'blue', color: "2196F3"},
 // //     {label: 'pink', color: "E91E63"}
 // // ]
-
+//TODO LIST
 // export class App extends React.Component{
 //     state ={
 //         todos: [
@@ -95,101 +95,104 @@
 
 
 
+// BOOKS
+
+// import { Heading } from './Heading/Heading';
+// import { Book } from './Books/Books.jsx';
+// import BookForm from "./BookForm/BookForm";
+// import ModalWindow from './ModalWindow/ModalWindow';
+
+// import booksJson from './Books.json';
+
+// import css from './App.module.css';
+// import { Component } from 'react';
+
+// const books = booksJson.books;
+
+// console.log(booksJson)
+
+// export class App extends Component{
+//     state={
+//         appBooks: books,
+//         modal:{
+//           isOpen: false,
+//           data: null
+//         }
+//     }
+
+//    handleAddBook = bookData =>{
+//     if(this.state.appBooks.some(book => book.title === bookData.title)){
+//         alert(`Ooops, book with title ${bookData.title} already exist`)
+//         return
+//     }
+
+//     console.log("bookDate", bookData)
+
+//     this.setState(prevState =>{return{
+//        appBooks: [bookData, ...prevState.appBooks]
+//     }})
+//    }
+
+//    onOpenModal = (modalData) =>{
+// this.setState({
+//   modal:{
+//     isOpen: true,
+//     data: modalData
+//   }
+// })
+//    }
+
+//    onCloseModal =()=>{
+//     this.setState({
+//       modal:{
+//         isOpen: false,
+//         data: null
+//       }
+//     })
+//    }
+
+//    componentDidMount(){
+//     const stryngifiedBooks = localStorage.getItem("books")
+//     const parsedBooks = JSON.parse(stryngifiedBooks) ?? [];
+//     this.setState({
+//       appBooks: parsedBooks
+//     })
+//    }
+
+//    componentDidUpdate(prevProps, prevState){
+//    if(this.state.appBooks.length !== prevState.appBooks.length){
+//     console.log("Changes is state with appbook")
+//     const stringifybooks = JSON.stringify(this.state.appBooks)
+//     localStorage.setItem("books", stringifybooks)
+//    }
+//    }
 
 
-import { Heading } from './Heading/Heading';
-import { Book } from './Books/Books.jsx';
-import BookForm from "./BookForm/BookForm";
-import ModalWindow from './ModalWindow/ModalWindow';
 
-import booksJson from './Books.json';
-
-import css from './App.module.css';
-import { Component } from 'react';
-
-const books = booksJson.books;
-
-console.log(booksJson)
-
-export class App extends Component{
-    state={
-        appBooks: books,
-        modal:{
-          isOpen: false,
-          data: null
-        }
-    }
-
-   handleAddBook = bookData =>{
-    if(this.state.appBooks.some(book => book.title === bookData.title)){
-        alert(`Ooops, book with title ${bookData.title} already exist`)
-        return
-    }
-
-    console.log("bookDate", bookData)
-
-    this.setState(prevState =>{return{
-       appBooks: [bookData, ...prevState.appBooks]
-    }})
-   }
-
-   onOpenModal = (modalData) =>{
-this.setState({
-  modal:{
-    isOpen: true,
-    data: modalData
-  }
-})
-   }
-
-   onCloseModal =()=>{
-    this.setState({
-      modal:{
-        isOpen: false,
-        data: null
-      }
-    })
-   }
-
-   componentDidMount(){
-    const stryngifiedBooks = localStorage.getItem("books")
-    const parsedBooks = JSON.parse(stryngifiedBooks) ?? [];
-    this.setState({
-      appBooks: parsedBooks
-    })
-   }
-
-   componentDidUpdate(prevProps, prevState){
-   if(this.state.appBooks.length !== prevState.appBooks.length){
-    console.log("Changes is state with appbook")
-    const stringifybooks = JSON.stringify(this.state.appBooks)
-    localStorage.setItem("books", stringifybooks)
-   }
-   }
+//     render(){
+//         return (
+//             <div>
+//               <Heading>React lesson 2, CSS</Heading>
+//               <BookForm handleAddBook={this.handleAddBook}/>
+//               <ul className={css.booksList}>
+//                 {this.state.appBooks.map((book) => (
+//                   <Book
+//                     key={`${book.title}${book.author}`}
+//                     title={book.title}
+//                     author={book.author}
+//                     year={book.year}
+//                     genre={book.genre}
+//                     favourite={book.favourite}
+//                     cover={book.cover}
+//                     onOpenModal={this.onOpenModal}
+//                   />
+//                 ))}
+//               </ul>
+//               {this.state.modal.isOpen && <ModalWindow data={this.state.modal.data} onClose={this.onCloseModal}/>}
+//             </div>
+//           );
+//     }
+// }
 
 
-
-    render(){
-        return (
-            <div>
-              <Heading>React lesson 2, CSS</Heading>
-              <BookForm handleAddBook={this.handleAddBook}/>
-              <ul className={css.booksList}>
-                {this.state.appBooks.map((book) => (
-                  <Book
-                    key={`${book.title}${book.author}`}
-                    title={book.title}
-                    author={book.author}
-                    year={book.year}
-                    genre={book.genre}
-                    favourite={book.favourite}
-                    cover={book.cover}
-                    onOpenModal={this.onOpenModal}
-                  />
-                ))}
-              </ul>
-              {this.state.modal.isOpen && <ModalWindow data={this.state.modal.data} onClose={this.onCloseModal}/>}
-            </div>
-          );
-    }
-}
+//READER
