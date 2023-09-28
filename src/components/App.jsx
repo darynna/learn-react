@@ -195,32 +195,94 @@
 // }
 
 
-//READER
+//POKEMON 
+
+// import { Component } from "react";
+// import PokemonForm from "./PokemonForm/PokemonForm";
+// import PokemonInfo from "./PokemonInfo/PokemonInfo";
+// import { ToastContainer} from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// export default class App extends Component{
+
+//     state={
+//         pokemonName: ''
+//     }
+//    handleSearchSubmit=(pokemonName)=>{
+//      this.setState({
+//         pokemonName: pokemonName
+//      })
+//    }
+
+//     render(){
+//         return(
+//             <>
+//             <PokemonForm onSubmit={this.handleSearchSubmit}/>
+//             <ToastContainer/>
+//             <PokemonInfo pokemonName={this.state.pokemonName}/>
+//             </>
+//         )
+//     }
+// }
+
 
 import { Component } from "react";
-import PokemonForm from "./PokemonForm/PokemonForm";
-import PokemonInfo from "./PokemonInfo/PokemonInfo";
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { MaterialsEditorForm } from "./MaterialsEditorForm/MaterialsEditorForm";
+import * as API from '../services/api'
+import { Materials } from "./Materials/Materials";
+
 
 export default class App extends Component{
-
     state={
-        pokemonName: ''
+        materials: [],
+        isloading: false,
+        error: false
     }
-   handleSearchSubmit=(pokemonName)=>{
-     this.setState({
-        pokemonName: pokemonName
-     })
-   }
 
-    render(){
-        return(
-            <>
-            <PokemonForm onSubmit={this.handleSearchSubmit}/>
-            <ToastContainer/>
-            <PokemonInfo pokemonName={this.state.pokemonName}/>
-            </>
-        )
+    async componentDidMount(){
+        try {
+            this.setState({isloading: true})
+            const materials = await API.getMaterials();
+            this.setState({materials: [...materials], isloading: false})
+        } catch (error) {
+            this.setState({error: true, isloading: false})
+            console.log(error)
+        }
     }
-}
+
+     addMaterials = async(values) =>{
+        try {
+        this.setState({isloading: true})
+        const materials = await API.addMaterials(values);
+        this.setState(states => ({
+            materials: [...states.materials, materials], isloading: false
+        }))
+        console.log(materials)
+        } catch (error) {
+            this.setState({error: true, isloading: false})
+            console.log(error)
+        }
+    }
+
+    deleteMaterial = async(id) =>{
+      try {
+        await API.deleteMaterial(id);
+      this.setState(state=>({
+        materials: state.materials.filter(material => material.id !== id)
+      }))
+      } catch (error) {
+        this.setState({error: true, isloading: false})
+            console.log(error)
+      }
+    }
+    
+        render(){
+            console.log(this.state.materials)
+            return( <><MaterialsEditorForm onSubmit={this.addMaterials}/>
+            {this.state.isloading && <p>Loading...</p>}
+            {this.state.error && <p>Error</p>}
+            <Materials items={this.state.materials} onDelete={this.deleteMaterial}/>
+            </>
+            )
+        }
+    }
