@@ -275,13 +275,25 @@ export default class App extends Component{
             console.log(error)
       }
     }
+
+    updateMaterial = async fields =>{
+       try {
+        const uptadeMaterial = await API.updateMaterial(fields)
+       this.setState(state=>({
+        materials: state.materials.map(material => material.id === fields.id ? uptadeMaterial : material)
+       }))
+       } catch (error) {
+        this.setState({error: true, isloading: false})
+            console.log(error)
+       }
+    }
     
         render(){
             console.log(this.state.materials)
             return( <><MaterialsEditorForm onSubmit={this.addMaterials}/>
             {this.state.isloading && <p>Loading...</p>}
             {this.state.error && <p>Error</p>}
-            <Materials items={this.state.materials} onDelete={this.deleteMaterial}/>
+            <Materials items={this.state.materials} onDelete={this.deleteMaterial} onUpdate={this.updateMaterial}/>
             </>
             )
         }
