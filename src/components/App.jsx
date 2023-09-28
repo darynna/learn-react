@@ -8,6 +8,8 @@
 // import TabsDate from '../tabs.json';
 // import Tabs from './Tabs/Tabs';
 
+import { Component } from "react";
+
 // // import Clock from './Clock/Clock';
 // // import Form from './Form'
 // // import { LoginForm } from "./LoginForm/LoginForm";
@@ -195,32 +197,203 @@
 // }
 
 
-//READER
+//POKEMON 
 
-import { Component } from "react";
-import PokemonForm from "./PokemonForm/PokemonForm";
-import PokemonInfo from "./PokemonInfo/PokemonInfo";
-import { ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { Component } from "react";
+// import PokemonForm from "./PokemonForm/PokemonForm";
+// import PokemonInfo from "./PokemonInfo/PokemonInfo";
+// import { ToastContainer} from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// export default class App extends Component{
+
+//     state={
+//         pokemonName: ''
+//     }
+//    handleSearchSubmit=(pokemonName)=>{
+//      this.setState({
+//         pokemonName: pokemonName
+//      })
+//    }
+
+//     render(){
+//         return(
+//             <>
+//             <PokemonForm onSubmit={this.handleSearchSubmit}/>
+//             <ToastContainer/>
+//             <PokemonInfo pokemonName={this.state.pokemonName}/>
+//             </>
+//         )
+//     }
+// }
+
+
+//MATERIAL
+
+// import { Component } from "react";
+// import { MaterialsEditorForm } from "./MaterialsEditorForm/MaterialsEditorForm";
+// import * as API from '../services/api'
+// import { Materials } from "./Materials/Materials";
+
+
+// export default class App extends Component{
+//     state={
+//         materials: [],
+//         isloading: false,
+//         error: false
+//     }
+
+//     async componentDidMount(){
+//         try {
+//             this.setState({isloading: true})
+//             const materials = await API.getMaterials();
+//             this.setState({materials: [...materials], isloading: false})
+//         } catch (error) {
+//             this.setState({error: true, isloading: false})
+//             console.log(error)
+//         }
+//     }
+
+//      addMaterials = async(values) =>{
+//         try {
+//         this.setState({isloading: true})
+//         const materials = await API.addMaterials(values);
+//         this.setState(states => ({
+//             materials: [...states.materials, materials], isloading: false
+//         }))
+//         console.log(materials)
+//         } catch (error) {
+//             this.setState({error: true, isloading: false})
+//             console.log(error)
+//         }
+//     }
+
+//     deleteMaterial = async(id) =>{
+//       try {
+//         await API.deleteMaterial(id);
+//       this.setState(state=>({
+//         materials: state.materials.filter(material => material.id !== id)
+//       }))
+//       } catch (error) {
+//         this.setState({error: true, isloading: false})
+//             console.log(error)
+//       }
+//     }
+
+//     updateMaterial = async fields =>{
+//        try {
+//         const uptadeMaterial = await API.updateMaterial(fields)
+//        this.setState(state=>({
+//         materials: state.materials.map(material => material.id === fields.id ? uptadeMaterial : material)
+//        }))
+//        } catch (error) {
+//         this.setState({error: true, isloading: false})
+//             console.log(error)
+//        }
+//     }
+    
+//         render(){
+//             console.log(this.state.materials)
+//             return( <><MaterialsEditorForm onSubmit={this.addMaterials}/>
+//             {this.state.isloading && <p>Loading...</p>}
+//             {this.state.error && <p>Error</p>}
+//             <Materials items={this.state.materials} onDelete={this.deleteMaterial} onUpdate={this.updateMaterial}/>
+//             </>
+//             )
+//         }
+//     }
+
+
+
+//lesson 3 with json placeholder 
+import { StyledAppContainer } from "./App.styled";
+import { fetchPosts, findPostById } from "services/apii";
 
 export default class App extends Component{
-
     state={
-        pokemonName: ''
+        post:  null,
+        loading: false,
+        error: null,
+        searchedPostId: null
     }
-   handleSearchSubmit=(pokemonName)=>{
-     this.setState({
-        pokemonName: pokemonName
-     })
-   }
+
+    fetchAllPosts= async()=>{
+        try {
+            this.setState({loading: true})
+           const posts = await fetchPosts()
+           console.log(posts)
+           this.setState({posts: posts})
+
+        } catch (error) {
+            this.setState({error: error.message})
+        }finally{
+            this.setState({loading: false})
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState){
+      if(prevState.searchedPostId !== this.state.searchedPostId){
+        this.fetchPostById()
+      }
+    }
+
+    fetchPostById = async()=>{
+        try {
+            this.setState({loading: true})
+            const post = await findPostById(this.state.searchedPostId)
+
+            this.setState({posts: [post]})
+        } catch (error) {
+            this.setState({error: error.message})
+        }finally{
+            this.setState({loading: false})
+        }
+    }
+
+    componentDidMount(){
+        this.fetchAllPosts();
+
+    }
+
+    handleSearchsubmit = (event)=>{
+        event.preventDefault();
+        const searchedPostId = event.currentTarget.elements.searchPostId.value
+        this.setState({
+            searchedPostId: searchedPostId
+        })
+
+        event.currentTarget.reset()
+    }
 
     render(){
+
+        const showpost = Array.isArray(this.state.posts) && this.state.posts.length
         return(
-            <>
-            <PokemonForm onSubmit={this.handleSearchSubmit}/>
-            <ToastContainer/>
-            <PokemonInfo pokemonName={this.state.pokemonName}/>
-            </>
+            <StyledAppContainer>
+            <h1>App title</h1>
+            {this.state.loading && <div>
+                <p>Loading...</p>
+            </div>}
+            <form onSubmit={this.handleSearchsubmit}>
+                <label>Enter post Id to find one
+                    <input 
+                    type="text"
+                    name="searchPostId"
+                     />
+                </label>
+                <button type="submit">Submit</button>
+                <button type="submit" onClick={this.fetchAllPosts}>Reset</button>
+            </form>
+            {this.state.error && <p>{this.state.error}</p>}
+            <ul className="postList">
+                {showpost && this.state.posts.map((post) => {return(<li className="postListItem">
+                    <span>Id: {post.id}</span><br />
+                    <span >Title: {post.title}</span><br />
+                    <span >User: {post.userId}</span><br />
+                    <span >Body: {post.body}</span><br />
+                </li>)})}
+            </ul>
+            </StyledAppContainer>
         )
     }
 }
