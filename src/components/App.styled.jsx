@@ -16,4 +16,8 @@ export const StyledAppContainer = styled.div`
     .postListItem{
         list-style-type: none;
     }
+
+    .typeBtn{
+        background-colr: red
+    }
 `

@@ -8,7 +8,8 @@
 // import TabsDate from '../tabs.json';
 // import Tabs from './Tabs/Tabs';
 
-import { Component } from "react";
+// import { Component, useEffect, useState } from "react";
+// import { OldSignupForm } from "./SignUpForm/SignupForm";
 
 // // import Clock from './Clock/Clock';
 // // import Form from './Form'
@@ -305,76 +306,77 @@ import { Component } from "react";
 
 
 
-//lesson 3 with json placeholder 
+// lesson 3 with json placeholder 
+import { useState, useEffect } from "react";
 import { StyledAppContainer } from "./App.styled";
 import { fetchPosts, findPostById } from "services/apii";
 
-export default class App extends Component{
-    state={
-        post:  null,
-        loading: false,
-        error: null,
-        searchedPostId: null
-    }
+export const App =()=>{
+//     state={
+//         post:  null,
+//         loading: false,
+//         error: null,
+//         searchedPostId: null
+//     }
 
-    fetchAllPosts= async()=>{
+    const [posts, setPosts] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [error, setError] = useState(null);
+    const [searchedPostId, setSearchedPostId] = useState(null)
+
+    const fetchAllPosts= async()=>{
         try {
-            this.setState({loading: true})
+           setIsLoading(true)
            const posts = await fetchPosts()
-           console.log(posts)
-           this.setState({posts: posts})
+           setPosts(posts)
 
         } catch (error) {
-            this.setState({error: error.message})
+            setError(error.message)
         }finally{
-            this.setState({loading: false})
+            setIsLoading(false)
         }
     }
 
-    componentDidUpdate(prevProps, prevState){
-      if(prevState.searchedPostId !== this.state.searchedPostId){
-        this.fetchPostById()
-      }
-    }
-
-    fetchPostById = async()=>{
-        try {
-            this.setState({loading: true})
-            const post = await findPostById(this.state.searchedPostId)
-
-            this.setState({posts: [post]})
-        } catch (error) {
-            this.setState({error: error.message})
-        }finally{
-            this.setState({loading: false})
+    useEffect(()=> {
+        if(!searchedPostId){
+            return
         }
-    }
+        const fetchPostById = async()=>{
+            try {
+                setIsLoading(true)
+                const post = await findPostById(searchedPostId)
+    
+                setPosts([post])
+            } catch (error) {
+                setError(error.message)
+            }finally{
+                setIsLoading(false)
+            }
+        }
+    
+        fetchPostById();
+    }, [searchedPostId])
 
-    componentDidMount(){
-        this.fetchAllPosts();
+    useEffect(()=>{
+        fetchAllPosts()
+    }, [])
 
-    }
-
-    handleSearchsubmit = (event)=>{
+    const handleSearchsubmit = (event)=>{
         event.preventDefault();
-        const searchedPostId = event.currentTarget.elements.searchPostId.value
-        this.setState({
-            searchedPostId: searchedPostId
-        })
+        const searchedPostIdValue = event.currentTarget.elements.searchPostId.value
+        setSearchedPostId(searchedPostIdValue)
 
         event.currentTarget.reset()
     }
+        const showpost = Array.isArray(posts) && posts.length
 
-    render(){
-
-        const showpost = Array.isArray(this.state.posts) && this.state.posts.length
         return(
             <StyledAppContainer>
             <h1>App title</h1>
-            {this.state.loading && <div>
+            {isLoading && <div>
                 <p>Loading...</p>
             </div>}
-            <form onSubmit={this.handleSearchsubmit}>
+            <form onSubmit={handleSearchsubmit}>
                 <label>Enter post Id to find one
                     <input 
                     type="text"
@@ -382,11 +384,11 @@ export default class App extends Component{
                      />
                 </label>
                 <button type="submit">Submit</button>
-                <button type="submit" onClick={this.fetchAllPosts}>Reset</button>
+                <button type="submit" onClick={fetchAllPosts}>Reset</button>
             </form>
-            {this.state.error && <p>{this.state.error}</p>}
+            {error && <p>{error}</p>}
             <ul className="postList">
-                {showpost && this.state.posts.map((post) => {return(<li className="postListItem">
+                {showpost && posts.map((post) => {return(<li className="postListItem">
                     <span>Id: {post.id}</span><br />
                     <span >Title: {post.title}</span><br />
                     <span >User: {post.userId}</span><br />
@@ -395,5 +397,24 @@ export default class App extends Component{
             </ul>
             </StyledAppContainer>
         )
-    }
 }
+
+// // Module 4
+// // import SignupForm from "./SignUpForm/SignupForm";
+// // import Clock from "./Clock/Clock";
+// // import ColorPicker from "./ColorPicker";
+// // import Counter from "./Counter/Counter";
+// import DetailsSection from "./DetailsSection/DetailsSection";
+// // const colors = [
+// //     {label: 'red', color: "F44336"},
+// //     {label: 'green', color: "4CAF50"},
+// //     {label: 'blue', color: "2196F3"},
+// //     {label: 'pink', color: "E91E63"}
+// // ]
+// export default class App extends Component{
+//     render(){
+//         return (
+// <DetailsSection/>
+//         )
+//     }
+// }
