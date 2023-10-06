@@ -198,7 +198,7 @@
 // }
 
 
-//POKEMON 
+// // POKEMON 
 
 // import { Component } from "react";
 // import PokemonForm from "./PokemonForm/PokemonForm";
@@ -206,11 +206,12 @@
 // import { ToastContainer} from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
-// export default class App extends Component{
+// export class App extends Component{
 
 //     state={
 //         pokemonName: ''
 //     }
+    
 //    handleSearchSubmit=(pokemonName)=>{
 //      this.setState({
 //         pokemonName: pokemonName
@@ -307,97 +308,97 @@
 
 
 // lesson 3 with json placeholder 
-import { useState, useEffect } from "react";
-import { StyledAppContainer } from "./App.styled";
-import { fetchPosts, findPostById } from "services/apii";
+// import { useState, useEffect } from "react";
+// import { StyledAppContainer } from "./App.styled";
+// import { fetchPosts, findPostById } from "services/apii";
 
-export const App =()=>{
-//     state={
-//         post:  null,
-//         loading: false,
-//         error: null,
-//         searchedPostId: null
+// export const App =()=>{
+// //     state={
+// //         post:  null,
+// //         loading: false,
+// //         error: null,
+// //         searchedPostId: null
+// //     }
+
+//     const [posts, setPosts] = useState(null)
+//     const [isLoading, setIsLoading] = useState(false)
+//     const [error, setError] = useState(null);
+//     const [searchedPostId, setSearchedPostId] = useState(null)
+
+//     const fetchAllPosts= async()=>{
+//         try {
+//            setIsLoading(true)
+//            const posts = await fetchPosts()
+//            setPosts(posts)
+
+//         } catch (error) {
+//             setError(error.message)
+//         }finally{
+//             setIsLoading(false)
+//         }
 //     }
 
-    const [posts, setPosts] = useState(null)
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(null);
-    const [searchedPostId, setSearchedPostId] = useState(null)
-
-    const fetchAllPosts= async()=>{
-        try {
-           setIsLoading(true)
-           const posts = await fetchPosts()
-           setPosts(posts)
-
-        } catch (error) {
-            setError(error.message)
-        }finally{
-            setIsLoading(false)
-        }
-    }
-
-    useEffect(()=> {
-        if(!searchedPostId){
-            return
-        }
-        const fetchPostById = async()=>{
-            try {
-                setIsLoading(true)
-                const post = await findPostById(searchedPostId)
+//     useEffect(()=> {
+//         if(!searchedPostId){
+//             return
+//         }
+//         const fetchPostById = async()=>{
+//             try {
+//                 setIsLoading(true)
+//                 const post = await findPostById(searchedPostId)
     
-                setPosts([post])
-            } catch (error) {
-                setError(error.message)
-            }finally{
-                setIsLoading(false)
-            }
-        }
+//                 setPosts([post])
+//             } catch (error) {
+//                 setError(error.message)
+//             }finally{
+//                 setIsLoading(false)
+//             }
+//         }
     
-        fetchPostById();
-    }, [searchedPostId])
+//         fetchPostById();
+//     }, [searchedPostId])
 
-    useEffect(()=>{
-        fetchAllPosts()
-    }, [])
+//     useEffect(()=>{
+//         fetchAllPosts()
+//     }, [])
 
-    const handleSearchsubmit = (event)=>{
-        event.preventDefault();
-        const searchedPostIdValue = event.currentTarget.elements.searchPostId.value
-        setSearchedPostId(searchedPostIdValue)
+//     const handleSearchsubmit = (event)=>{
+//         event.preventDefault();
+//         const searchedPostIdValue = event.currentTarget.elements.searchPostId.value
+//         setSearchedPostId(searchedPostIdValue)
 
-        event.currentTarget.reset()
-    }
-        const showpost = Array.isArray(posts) && posts.length
+//         event.currentTarget.reset()
+//     }
+//         const showpost = Array.isArray(posts) && posts.length
 
-        return(
-            <StyledAppContainer>
-            <h1>App title</h1>
-            {isLoading && <div>
-                <p>Loading...</p>
-            </div>}
-            <form onSubmit={handleSearchsubmit}>
-                <label>Enter post Id to find one
-                    <input 
-                    type="text"
-                    name="searchPostId"
-                     />
-                </label>
-                <button type="submit">Submit</button>
-                <button type="submit" onClick={fetchAllPosts}>Reset</button>
-            </form>
-            {error && <p>{error}</p>}
-            <ul className="postList">
-                {showpost && posts.map((post) => {return(<li className="postListItem">
-                    <span>Id: {post.id}</span><br />
-                    <span >Title: {post.title}</span><br />
-                    <span >User: {post.userId}</span><br />
-                    <span >Body: {post.body}</span><br />
-                </li>)})}
-            </ul>
-            </StyledAppContainer>
-        )
-}
+//         return(
+//             <StyledAppContainer>
+//             <h1>App title</h1>
+//             {isLoading && <div>
+//                 <p>Loading...</p>
+//             </div>}
+//             <form onSubmit={handleSearchsubmit}>
+//                 <label>Enter post Id to find one
+//                     <input 
+//                     type="text"
+//                     name="searchPostId"
+//                      />
+//                 </label>
+//                 <button type="submit">Submit</button>
+//                 <button type="submit" onClick={fetchAllPosts}>Reset</button>
+//             </form>
+//             {error && <p>{error}</p>}
+//             <ul className="postList">
+//                 {showpost && posts.map((post) => {return(<li className="postListItem">
+//                     <span>Id: {post.id}</span><br />
+//                     <span >Title: {post.title}</span><br />
+//                     <span >User: {post.userId}</span><br />
+//                     <span >Body: {post.body}</span><br />
+//                 </li>)})}
+//             </ul>
+//             </StyledAppContainer>
+//         )
+// }
 
 // // Module 4
 // // import SignupForm from "./SignUpForm/SignupForm";
@@ -418,3 +419,38 @@ export const App =()=>{
 //         )
 //     }
 // }
+
+
+
+
+// POKEMON 
+
+// import { useState } from "react";
+// import PokemonForm from "./PokemonForm/PokemonForm";
+// import PokemonInfo from "./PokemonInfo/PokemonInfo";
+// import { ToastContainer} from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// export const App =()=>{
+
+
+//     const [pokemonName, setPokemonName] = useState('')
+
+//         return(
+//             <>
+//             <PokemonForm onSubmit={setPokemonName}/>
+//             <ToastContainer/>
+//             <PokemonInfo pokemonName={pokemonName}/>
+//             </>
+//         )
+
+// }
+import Counter from "./Counter/Counter"
+import Friends from "./Friends/Friends"
+
+export const App =()=>{
+
+    return(
+<Friends/>
+    )
+}

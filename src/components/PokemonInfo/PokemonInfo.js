@@ -1,30 +1,34 @@
-import { Component } from "react";
+import { Component, useEffect, useState } from "react";
 import PokemonPendingView from "components/PokemonPendingView/PokemonPendingView";
 import PokemonAPI from "components/services/PokemonAPI";
 
-export default class PokemonInfo extends Component{
-    state={
-        pokemon: null,
-        error: null,
-        status: 'idle'
+export default function PokemonInfo({pokemonName}){
+   console.log(pokemonName)
+    const [pokemon, setPokemon] = useState(null)
+    const [error, setError] = useState(null)
+    const [status, setStatus] = useState('idle')
 
-    }
+    
+   useEffect(()=>{
 
-    componentDidUpdate(prevProps, prevState){
-        const prevName = prevProps.pokemonName
-        const nextName = this.props.pokemonName
-        if(prevName !== nextName){
-            this.setState({status: "pending"})
+   if(!pokemonName){
+    return
+   }
 
-            PokemonAPI.fetchPokemon(nextName)
-            .then(pokemon => this.setState({pokemon, status: 'resolved'}))
-            .catch(error => this.setState({error, status: "rejected"}))
-            .finally(() => this.setState({loading: false}))
-        }
-    }
+    setStatus('pending');
+    setPokemon('')
 
-    render(){
-        const {pokemon,error, status} = this.state
+    PokemonAPI.fetchPokemon(pokemonName)
+            .then(pokemon => {
+            setPokemon(pokemon)
+            setStatus('resolved')})
+            .catch(error => {
+                setError(error)
+                setStatus('rejected')
+            })
+
+   }, [pokemonName])
+   console.log(pokemon)
         
         if(status === "idle"){
             return <div>Write pokemon name</div>
@@ -43,11 +47,11 @@ export default class PokemonInfo extends Component{
             <div>
                 <p>{pokemon.name}</p>
                 <img 
-                src={pokemon.sprites.other['official-artwork'].front_default} 
+                src={pokemon.sprites.front_default} 
                 alt={pokemon.name}
                 width="240"
                 />
                 </div>)
-        }
+        
     }
 }
