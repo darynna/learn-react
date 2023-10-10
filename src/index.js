@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import {App} from './components/App';
+import {App} from './components/App'
+import {DetailsContextProvider } from 'components/Context/Details.context';
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+ReactDOM.createRoot(document.getElementById('root')).render(
+    <DetailsContextProvider>
+<App /></DetailsContextProvider>
+);
 
 
 // import React from 'react';

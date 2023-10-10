@@ -445,12 +445,12 @@
 //         )
 
 // }
-import Counter from "./Counter/Counter"
-import Friends from "./Friends/Friends"
-
+// import Counter from "./Counter/Counter"
+// import Friends from "./Friends/Friends"
+import UseRefComp from "./useRef/useRef"
 export const App =()=>{
 
     return(
-<Friends/>
+<UseRefComp/>
     )
 }
