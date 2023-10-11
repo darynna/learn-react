@@ -2,11 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import {App} from './components/App'
-import {DetailsContextProvider } from 'components/Context/Details.context';
+// import {DetailsContextProvider } from 'components/Context/Details.context';
+
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//     <DetailsContextProvider>
+// <App /></DetailsContextProvider>
+// );
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-    <DetailsContextProvider>
-<App /></DetailsContextProvider>
+<BrowserRouter>
+<App />
+</BrowserRouter>
 );
 
 
