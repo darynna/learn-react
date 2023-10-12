@@ -448,14 +448,14 @@
 // import Counter from "./Counter/Counter"
 // import Friends from "./Friends/Friends"
 // import UseRefComp from "./useRef/useRef"
-import { NavLink, Route, Routes } from 'react-router-dom';
+import {Route, Routes } from 'react-router-dom';
 
-import HomePage from 'pages/HomePage';
-import PostsPage from 'pages/PostsPage';
+// import HomePage from 'pages/HomePage';
+// import PostsPage from 'pages/PostsPage';
 
-import { StyledAppContainer } from './App.styled';
-import SearchPage from 'pages/SearchPage';
-import PostDetailsPage from 'pages/PostDetailsPage';
+// import { StyledAppContainer } from './App.styled';
+// import SearchPage from 'pages/SearchPage';
+// import PostDetailsPage from 'pages/PostDetailsPage';
 
 /*
 Маршрутизація:
@@ -472,29 +472,52 @@ import PostDetailsPage from 'pages/PostDetailsPage';
 
 */
 
+// export const App = () => {
+//   return (
+//       <StyledAppContainer>
+//         <header>
+//           <nav>
+//             <NavLink className="header-link" to="/">
+//               Home
+//             </NavLink>
+//             <NavLink className="header-link" to="/posts">
+//               Posts
+//             </NavLink>
+//             <NavLink className="header-link" to="/search">
+//               Search
+//             </NavLink>
+//           </nav>
+//         </header>
+
+//         <Routes>
+//           <Route path='/' element={<HomePage />}/>
+//           <Route path='/posts' element={<PostsPage />}/>
+//           <Route path='/search' element={<SearchPage />}/>
+//           <Route path='/post-details/:postId/*' element={<PostDetailsPage />}/>
+//         </Routes>
+//       </StyledAppContainer>
+//   );
+// };
+
+import Home from 'pages2/Home';
+import Dogs from 'pages2/Dogs';
+import DogDetails from 'pages2/DogDetails';
+import { Layout } from './Layout';
+import { Gallery } from './Gallery/Gallery';
+
 export const App = () => {
   return (
-      <StyledAppContainer>
-        <header>
-          <nav>
-            <NavLink className="header-link" to="/">
-              Home
-            </NavLink>
-            <NavLink className="header-link" to="/posts">
-              Posts
-            </NavLink>
-            <NavLink className="header-link" to="/search">
-              Search
-            </NavLink>
-          </nav>
-        </header>
-
-        <Routes>
-          <Route path='/' element={<HomePage />}/>
-          <Route path='/posts' element={<PostsPage />}/>
-          <Route path='/search' element={<SearchPage />}/>
-          <Route path='/post-details/:postId/*' element={<PostDetailsPage />}/>
-        </Routes>
-      </StyledAppContainer>
+    
+    <Routes>
+      <Route path='/' element={<Layout/>}>
+      <Route index element={<Home/>}/>
+      <Route path='dogs' element={<Dogs/>}/>
+      <Route path='dogs/:dog' element={<DogDetails/>}>
+        <Route path='breeds' element={<div>Breeds</div>}/>
+        <Route path='gallery' element={<Gallery/>}/>
+      </Route>
+      </Route>
+    </Routes>
+  
   );
 };
