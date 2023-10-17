@@ -3,11 +3,13 @@ import Loader from 'components/Loader';
 import PostList from 'components/PostList';
 import React, { useEffect, useState } from 'react';
 import { fetchPosts } from '../components/services/api';
+import { useSelector } from 'react-redux';
 
 const PostsPage = () => {
   const [posts, setPosts] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  
 
   useEffect(() => {
     const fetchAllPosts = async () => {
