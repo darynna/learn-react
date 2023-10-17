@@ -448,76 +448,83 @@
 // import Counter from "./Counter/Counter"
 // import Friends from "./Friends/Friends"
 // import UseRefComp from "./useRef/useRef"
-import {Route, Routes } from 'react-router-dom';
+import {Route, Routes, NavLink } from 'react-router-dom';
 
-// import HomePage from 'pages/HomePage';
-// import PostsPage from 'pages/PostsPage';
+import HomePage from 'pages/HomePage';
+import PostsPage from 'pages/PostsPage';
 
-// import { StyledAppContainer } from './App.styled';
-// import SearchPage from 'pages/SearchPage';
-// import PostDetailsPage from 'pages/PostDetailsPage';
+import { StyledAppContainer } from './App.styled';
+import SearchPage from 'pages/SearchPage';
+import PostDetailsPage from 'pages/PostDetailsPage';
 
-/*
-Маршрутизація:
 
- <a href="www.google.com">Google</a> - будь-які посилання на зовнішні ресурси, 
- поза нашим додатком
+// Маршрутизація:
 
- <Link to="/some-route">Some page</Link>
- <NavLink to="/some-route"> Some page</NavLink> - для маршутизації по нашому додатку
+//  <a href="www.google.com">Google</a> - будь-які посилання на зовнішні ресурси, 
+//  поза нашим додатком
 
-  1. Зміна адресної строки браузера.
-  2. Підготувати Route для відображення, тієї чи іншої сторінки 
-     <Route path="/some-route" element={<HomePage />} />
+//  <Link to="/some-route">Some page</Link>
+//  <NavLink to="/some-route"> Some page</NavLink> - для маршутизації по нашому додатку
 
-*/
+//   1. Зміна адресної строки браузера.
+//   2. Підготувати Route для відображення, тієї чи іншої сторінки 
+//      <Route path="/some-route" element={<HomePage />} />
 
-// export const App = () => {
-//   return (
-//       <StyledAppContainer>
-//         <header>
-//           <nav>
-//             <NavLink className="header-link" to="/">
-//               Home
-//             </NavLink>
-//             <NavLink className="header-link" to="/posts">
-//               Posts
-//             </NavLink>
-//             <NavLink className="header-link" to="/search">
-//               Search
-//             </NavLink>
-//           </nav>
-//         </header>
 
-//         <Routes>
-//           <Route path='/' element={<HomePage />}/>
-//           <Route path='/posts' element={<PostsPage />}/>
-//           <Route path='/search' element={<SearchPage />}/>
-//           <Route path='/post-details/:postId/*' element={<PostDetailsPage />}/>
-//         </Routes>
-//       </StyledAppContainer>
-//   );
-// };
-
-import Home from 'pages2/Home';
-import Dogs from 'pages2/Dogs';
-import DogDetails from 'pages2/DogDetails';
-import { Layout } from './Layout';
-import { Gallery } from './Gallery/Gallery';
 
 export const App = () => {
   return (
-    
-    <Routes>
-      <Route path='/' element={<Layout/>}>
-      <Route index element={<Home/>}/>
-      <Route path='dogs' element={<Dogs/>}/>
-      <Route path='dogs/:dog' element={<DogDetails/>}>
-        <Route path='breeds' element={<div>Breeds</div>}/>
-        <Route path='gallery' element={<Gallery/>}/>
-      </Route>
-      </Route>
-    </Routes>
-  
+      <StyledAppContainer>
+        <header>
+          <nav>
+            <NavLink className="header-link" to="/">
+              Home
+            </NavLink>
+            <NavLink className="header-link" to="/posts">
+              Posts
+            </NavLink>
+            <NavLink className="header-link" to="/search">
+              Search
+            </NavLink>
+          </nav>
+        </header>
+
+        <Routes>
+          <Route path='/' element={<HomePage />}/>
+          <Route path='/posts' element={<PostsPage />}/>
+          <Route path='/search' element={<SearchPage />}/>
+          <Route path='/post-details/:postId/*' element={<PostDetailsPage />}/>
+        </Routes>
+      </StyledAppContainer>
   );
 };
+
+// import Home from 'pages2/Home';
+// import Dogs from 'pages2/Dogs';
+// import DogDetails from 'pages2/DogDetails';
+// import { Layout } from './Layout';
+// import { Gallery } from './Gallery/Gallery';
+// import { lazy } from 'react';
+
+// const Home = lazy(() => import('../pages2/Home'))
+// const Dogs = lazy(() => import('../pages2/Dogs'))
+// const DogDetails= lazy(() => import('../pages2/DogDetails'))
+// const Gallery = lazy(() => import('./Gallery/Gallery'))
+// const Layout= lazy(() => import('./Layout'))
+
+// export const App = () => {
+//   return (
+    
+//     <Routes>
+//       <Route path='/' element={<Layout/>}>
+//       <Route index element={<Home/>}/>
+//       <Route path='dogs' element={<Dogs/>}/>
+//       <Route path='dogs/:dog' element={<DogDetails/>}>
+//         <Route path='breeds' element={<div>Breeds</div>}/>
+//         <Route path='gallery' element={<Gallery/>}/>
+//       </Route>
+//       </Route>
+//     </Routes>
+  
+//   );
+// };
