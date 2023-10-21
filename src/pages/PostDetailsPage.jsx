@@ -4,6 +4,7 @@ import { NavLink, Routes, Route } from 'react-router-dom';
 import  PostCommentsPage from './PostComents'
 import { useDispatch, useSelector } from 'react-redux';
 import { findPostById } from 'services/apii';
+import { addPosts, setError, setLoading, setPostDetails } from 'redux/postDetailsReducer';
 
 
 const PostDetailsPage = () => {
@@ -22,15 +23,18 @@ const PostDetailsPage = () => {
     const fetchAllPosts = async () => {
       try {
         // setIsLoading(true);
-        dispatch({type: 'postDetails/setLoading', payload: true}) 
+        dispatch(setLoading(true)) 
         const postData = await findPostById(postId);
-        dispatch({type: 'postDetails/setPostDetails', payload: postData}) 
+        dispatch(setPostDetails(postData))
+        // dispatch({type: 'postDetails/setPostDetails', payload: postData}) 
         // setPostDetails(postData);
       } catch (error) {
-        dispatch({type: 'postDetails/setError', payload: true})
+        dispatch(setError(error))
+        // dispatch({type: 'postDetails/setError', payload: true})
         // setError(error.message);
       } finally {
-        dispatch({type: 'postDetails/setLoading', payload: false}) 
+        dispatch(setLoading(false)) 
+        // dispatch({type: 'postDetails/setLoading', payload: false}) 
         // setIsLoading(false);
       }
     };
@@ -42,7 +46,7 @@ const PostDetailsPage = () => {
   return (
     <div>
       {/* <Link to={backLinkHref.current}>Go Back</Link> */}
-
+   <button onClick={()=> dispatch(addPosts({title: '123', body:'123'}))}>cLICK TO ADD POST</button>
       {isLoading && <div>loading....</div>}
       {error && <div>ERROR</div>}
       {postDetails !== null && (

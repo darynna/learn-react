@@ -458,6 +458,8 @@ import SearchPage from 'pages/SearchPage';
 import PostDetailsPage from 'pages/PostDetailsPage';
 
 
+
+
 // Маршрутизація:
 
 //  <a href="www.google.com">Google</a> - будь-які посилання на зовнішні ресурси, 
@@ -472,32 +474,32 @@ import PostDetailsPage from 'pages/PostDetailsPage';
 
 
 
-export const App = () => {
-  return (
-      <StyledAppContainer>
-        <header>
-          <nav>
-            <NavLink className="header-link" to="/">
-              Home
-            </NavLink>
-            <NavLink className="header-link" to="/posts">
-              Posts
-            </NavLink>
-            <NavLink className="header-link" to="/search">
-              Search
-            </NavLink>
-          </nav>
-        </header>
+// export const App = () => {
+//   return (
+//       <StyledAppContainer>
+//         <header>
+//           <nav>
+//             <NavLink className="header-link" to="/">
+//               Home
+//             </NavLink>
+//             <NavLink className="header-link" to="/posts">
+//               Posts
+//             </NavLink>
+//             <NavLink className="header-link" to="/search">
+//               Search
+//             </NavLink>
+//           </nav>
+//         </header>
 
-        <Routes>
-          <Route path='/' element={<HomePage />}/>
-          <Route path='/posts' element={<PostsPage />}/>
-          <Route path='/search' element={<SearchPage />}/>
-          <Route path='/post-details/:postId/*' element={<PostDetailsPage />}/>
-        </Routes>
-      </StyledAppContainer>
-  );
-};
+//         <Routes>
+//           <Route path='/' element={<HomePage />}/>
+//           <Route path='/posts' element={<PostsPage />}/>
+//           <Route path='/search' element={<SearchPage />}/>
+//           <Route path='/post-details/:postId/*' element={<PostDetailsPage />}/>
+//         </Routes>
+//       </StyledAppContainer>
+//   );
+// };
 
 // import Home from 'pages2/Home';
 // import Dogs from 'pages2/Dogs';
@@ -528,3 +530,15 @@ export const App = () => {
   
 //   );
 // };
+import { LoginPage } from 'pages/LoginPage';
+import { Layout } from './Layout/Layout';
+
+export const App = () => {
+  return (
+    <Routes>
+      <Route path='/' element={<Layout/>}>
+         <Route path='login' element={<LoginPage/>}/>
+      </Route>
+    </Routes>
+  );
+};
