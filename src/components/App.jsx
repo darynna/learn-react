@@ -8,7 +8,8 @@
 // import TabsDate from '../tabs.json';
 // import Tabs from './Tabs/Tabs';
 
-import { Component } from "react";
+// import { Component, useEffect, useState } from "react";
+// import { OldSignupForm } from "./SignUpForm/SignupForm";
 
 // // import Clock from './Clock/Clock';
 // // import Form from './Form'
@@ -197,7 +198,7 @@ import { Component } from "react";
 // }
 
 
-//POKEMON 
+// // POKEMON 
 
 // import { Component } from "react";
 // import PokemonForm from "./PokemonForm/PokemonForm";
@@ -205,11 +206,12 @@ import { Component } from "react";
 // import { ToastContainer} from 'react-toastify';
 // import 'react-toastify/dist/ReactToastify.css';
 
-// export default class App extends Component{
+// export class App extends Component{
 
 //     state={
 //         pokemonName: ''
 //     }
+    
 //    handleSearchSubmit=(pokemonName)=>{
 //      this.setState({
 //         pokemonName: pokemonName
@@ -305,95 +307,238 @@ import { Component } from "react";
 
 
 
-//lesson 3 with json placeholder 
-import { StyledAppContainer } from "./App.styled";
-import { fetchPosts, findPostById } from "services/apii";
+// lesson 3 with json placeholder 
+// import { useState, useEffect } from "react";
+// import { StyledAppContainer } from "./App.styled";
+// import { fetchPosts, findPostById } from "services/apii";
 
-export default class App extends Component{
-    state={
-        post:  null,
-        loading: false,
-        error: null,
-        searchedPostId: null
-    }
+// export const App =()=>{
+// //     state={
+// //         post:  null,
+// //         loading: false,
+// //         error: null,
+// //         searchedPostId: null
+// //     }
 
-    fetchAllPosts= async()=>{
-        try {
-            this.setState({loading: true})
-           const posts = await fetchPosts()
-           console.log(posts)
-           this.setState({posts: posts})
+//     const [posts, setPosts] = useState(null)
+//     const [isLoading, setIsLoading] = useState(false)
+//     const [error, setError] = useState(null);
+//     const [searchedPostId, setSearchedPostId] = useState(null)
 
-        } catch (error) {
-            this.setState({error: error.message})
-        }finally{
-            this.setState({loading: false})
-        }
-    }
+//     const fetchAllPosts= async()=>{
+//         try {
+//            setIsLoading(true)
+//            const posts = await fetchPosts()
+//            setPosts(posts)
 
-    componentDidUpdate(prevProps, prevState){
-      if(prevState.searchedPostId !== this.state.searchedPostId){
-        this.fetchPostById()
-      }
-    }
+//         } catch (error) {
+//             setError(error.message)
+//         }finally{
+//             setIsLoading(false)
+//         }
+//     }
 
-    fetchPostById = async()=>{
-        try {
-            this.setState({loading: true})
-            const post = await findPostById(this.state.searchedPostId)
+//     useEffect(()=> {
+//         if(!searchedPostId){
+//             return
+//         }
+//         const fetchPostById = async()=>{
+//             try {
+//                 setIsLoading(true)
+//                 const post = await findPostById(searchedPostId)
+    
+//                 setPosts([post])
+//             } catch (error) {
+//                 setError(error.message)
+//             }finally{
+//                 setIsLoading(false)
+//             }
+//         }
+    
+//         fetchPostById();
+//     }, [searchedPostId])
 
-            this.setState({posts: [post]})
-        } catch (error) {
-            this.setState({error: error.message})
-        }finally{
-            this.setState({loading: false})
-        }
-    }
+//     useEffect(()=>{
+//         fetchAllPosts()
+//     }, [])
 
-    componentDidMount(){
-        this.fetchAllPosts();
+//     const handleSearchsubmit = (event)=>{
+//         event.preventDefault();
+//         const searchedPostIdValue = event.currentTarget.elements.searchPostId.value
+//         setSearchedPostId(searchedPostIdValue)
 
-    }
+//         event.currentTarget.reset()
+//     }
+//         const showpost = Array.isArray(posts) && posts.length
 
-    handleSearchsubmit = (event)=>{
-        event.preventDefault();
-        const searchedPostId = event.currentTarget.elements.searchPostId.value
-        this.setState({
-            searchedPostId: searchedPostId
-        })
+//         return(
+//             <StyledAppContainer>
+//             <h1>App title</h1>
+//             {isLoading && <div>
+//                 <p>Loading...</p>
+//             </div>}
+//             <form onSubmit={handleSearchsubmit}>
+//                 <label>Enter post Id to find one
+//                     <input 
+//                     type="text"
+//                     name="searchPostId"
+//                      />
+//                 </label>
+//                 <button type="submit">Submit</button>
+//                 <button type="submit" onClick={fetchAllPosts}>Reset</button>
+//             </form>
+//             {error && <p>{error}</p>}
+//             <ul className="postList">
+//                 {showpost && posts.map((post) => {return(<li className="postListItem">
+//                     <span>Id: {post.id}</span><br />
+//                     <span >Title: {post.title}</span><br />
+//                     <span >User: {post.userId}</span><br />
+//                     <span >Body: {post.body}</span><br />
+//                 </li>)})}
+//             </ul>
+//             </StyledAppContainer>
+//         )
+// }
 
-        event.currentTarget.reset()
-    }
+// // Module 4
+// // import SignupForm from "./SignUpForm/SignupForm";
+// // import Clock from "./Clock/Clock";
+// // import ColorPicker from "./ColorPicker";
+// // import Counter from "./Counter/Counter";
+// import DetailsSection from "./DetailsSection/DetailsSection";
+// // const colors = [
+// //     {label: 'red', color: "F44336"},
+// //     {label: 'green', color: "4CAF50"},
+// //     {label: 'blue', color: "2196F3"},
+// //     {label: 'pink', color: "E91E63"}
+// // ]
+// export default class App extends Component{
+//     render(){
+//         return (
+// <DetailsSection/>
+//         )
+//     }
+// }
 
-    render(){
 
-        const showpost = Array.isArray(this.state.posts) && this.state.posts.length
-        return(
-            <StyledAppContainer>
-            <h1>App title</h1>
-            {this.state.loading && <div>
-                <p>Loading...</p>
-            </div>}
-            <form onSubmit={this.handleSearchsubmit}>
-                <label>Enter post Id to find one
-                    <input 
-                    type="text"
-                    name="searchPostId"
-                     />
-                </label>
-                <button type="submit">Submit</button>
-                <button type="submit" onClick={this.fetchAllPosts}>Reset</button>
-            </form>
-            {this.state.error && <p>{this.state.error}</p>}
-            <ul className="postList">
-                {showpost && this.state.posts.map((post) => {return(<li className="postListItem">
-                    <span>Id: {post.id}</span><br />
-                    <span >Title: {post.title}</span><br />
-                    <span >User: {post.userId}</span><br />
-                    <span >Body: {post.body}</span><br />
-                </li>)})}
-            </ul>
-            </StyledAppContainer>
-        )
-    }
-}
+
+
+// POKEMON 
+
+// import { useState } from "react";
+// import PokemonForm from "./PokemonForm/PokemonForm";
+// import PokemonInfo from "./PokemonInfo/PokemonInfo";
+// import { ToastContainer} from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
+
+// export const App =()=>{
+
+
+//     const [pokemonName, setPokemonName] = useState('')
+
+//         return(
+//             <>
+//             <PokemonForm onSubmit={setPokemonName}/>
+//             <ToastContainer/>
+//             <PokemonInfo pokemonName={pokemonName}/>
+//             </>
+//         )
+
+// }
+// import Counter from "./Counter/Counter"
+// import Friends from "./Friends/Friends"
+// import UseRefComp from "./useRef/useRef"
+import {Route, Routes, NavLink } from 'react-router-dom';
+
+import HomePage from 'pages/HomePage';
+import PostsPage from 'pages/PostsPage';
+
+import { StyledAppContainer } from './App.styled';
+import SearchPage from 'pages/SearchPage';
+import PostDetailsPage from 'pages/PostDetailsPage';
+
+
+
+
+// Маршрутизація:
+
+//  <a href="www.google.com">Google</a> - будь-які посилання на зовнішні ресурси, 
+//  поза нашим додатком
+
+//  <Link to="/some-route">Some page</Link>
+//  <NavLink to="/some-route"> Some page</NavLink> - для маршутизації по нашому додатку
+
+//   1. Зміна адресної строки браузера.
+//   2. Підготувати Route для відображення, тієї чи іншої сторінки 
+//      <Route path="/some-route" element={<HomePage />} />
+
+
+
+// export const App = () => {
+//   return (
+//       <StyledAppContainer>
+//         <header>
+//           <nav>
+//             <NavLink className="header-link" to="/">
+//               Home
+//             </NavLink>
+//             <NavLink className="header-link" to="/posts">
+//               Posts
+//             </NavLink>
+//             <NavLink className="header-link" to="/search">
+//               Search
+//             </NavLink>
+//           </nav>
+//         </header>
+
+//         <Routes>
+//           <Route path='/' element={<HomePage />}/>
+//           <Route path='/posts' element={<PostsPage />}/>
+//           <Route path='/search' element={<SearchPage />}/>
+//           <Route path='/post-details/:postId/*' element={<PostDetailsPage />}/>
+//         </Routes>
+//       </StyledAppContainer>
+//   );
+// };
+
+// import Home from 'pages2/Home';
+// import Dogs from 'pages2/Dogs';
+// import DogDetails from 'pages2/DogDetails';
+// import { Layout } from './Layout';
+// import { Gallery } from './Gallery/Gallery';
+// import { lazy } from 'react';
+
+// const Home = lazy(() => import('../pages2/Home'))
+// const Dogs = lazy(() => import('../pages2/Dogs'))
+// const DogDetails= lazy(() => import('../pages2/DogDetails'))
+// const Gallery = lazy(() => import('./Gallery/Gallery'))
+// const Layout= lazy(() => import('./Layout'))
+
+// export const App = () => {
+//   return (
+    
+//     <Routes>
+//       <Route path='/' element={<Layout/>}>
+//       <Route index element={<Home/>}/>
+//       <Route path='dogs' element={<Dogs/>}/>
+//       <Route path='dogs/:dog' element={<DogDetails/>}>
+//         <Route path='breeds' element={<div>Breeds</div>}/>
+//         <Route path='gallery' element={<Gallery/>}/>
+//       </Route>
+//       </Route>
+//     </Routes>
+  
+//   );
+// };
+import { LoginPage } from 'pages/LoginPage';
+import { Layout } from './Layout/Layout';
+
+export const App = () => {
+  return (
+    <Routes>
+      <Route path='/' element={<Layout/>}>
+         <Route path='login' element={<LoginPage/>}/>
+      </Route>
+    </Routes>
+  );
+};

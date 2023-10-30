@@ -1,37 +1,36 @@
-import { Component } from "react";
+import { useState } from "react";
 import { toast } from 'react-toastify';
 
-export default class PokemonForm extends Component{
-    state={
-        pokemonName: ''
-    }
+export default function PokemonForm({onSubmit}) {
 
-    hangleNameChange = e =>{
-        this.setState({pokemonName: e.currentTarget.value.toLowerCase()})
+    const [pokemonName, setPokemonName]=useState('')
+
+    const hangleNameChange = e =>{
+        setPokemonName(e.currentTarget.value.toLowerCase())
     };
 
-    handleSubmit = e =>{
+    const handleSubmit = e =>{
         e.preventDefault()
 
-        if(this.state.pokemonName.trim() === ''){
+        if(pokemonName.trim() === ''){
             return toast.error("Write name of pokemon")
         }
 
-        this.setState({pokemonName: ''})
-        this.props.onSubmit(this.state.pokemonName)
+        setPokemonName('')
+        onSubmit(pokemonName)
     }
 
-    render(){
+    console.log(pokemonName)
+ 
         return(
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <input
                 type="text"
                 name="pokemonName"
-                value={this.state.pokemonName}
-                onChange={this.hangleNameChange}
+                value={pokemonName}
+                onChange={hangleNameChange}
                 />
                 <button type="submit">Find</button>
             </form>
         )
-    }
 }

@@ -1,9 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 import './index.css';
-import App from './components/App';
+import {App} from './components/App'
+// import {DetailsContextProvider } from 'components/Context/Details.context';
 
-ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+// ReactDOM.createRoot(document.getElementById('root')).render(
+//     <DetailsContextProvider>
+// <App /></DetailsContextProvider>
+// );
+import { BrowserRouter } from "react-router-dom";
+// import { PersistGate } from 'redux-persist/integration/react';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+<BrowserRouter>
+<Provider store={store}>
+  {/* <PersistGate persistor={persistor}> */}
+    <App />
+    {/* </PersistGate> */}
+  </Provider>
+</BrowserRouter>
+);
 
 
 // import React from 'react';
